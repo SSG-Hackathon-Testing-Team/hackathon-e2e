@@ -21,7 +21,7 @@ jobs:
     steps:
       - name: set path
         run: |
-          cd ../
+          cd ../../
 
         
       - name: Install dependencies
