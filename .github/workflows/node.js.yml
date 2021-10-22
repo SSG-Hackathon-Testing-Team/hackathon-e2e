@@ -24,16 +24,16 @@ jobs:
       - name: Install dependencies
         run: |
             npx playwright install-deps
-        working-directory: ../
+        working-directory: ../../
         
       - name: Setup
         
         run: |
             npm install
             npx playwright install
-        working-directory: ../
+        working-directory: ../../
             
       - name: test
         run: |
             npm test
-        working-directory: ../
+        working-directory: ../../
