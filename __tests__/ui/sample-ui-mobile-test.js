@@ -1,6 +1,8 @@
-const {devices, webkit} = require('playwright')
+const { devices, webkit } = require('playwright');
 const expect = require('expect');
-let browser, page, context;
+let browser;
+let page;
+let context;
 const iPhone12 = devices['iPhone 12'];
 
 beforeAll(async () => {
@@ -9,22 +11,25 @@ beforeAll(async () => {
     });
     context = await browser.newContext({
         ...iPhone12
-    })
-  });
-  afterAll(async () => {
+    });
+});
+
+afterAll(async () => {
     await browser.close();
-  });
-  beforeEach(async () => {
+});
+
+beforeEach(async () => {
     page = await context.newPage();
-  });
-  afterEach(async () => {
+});
+
+afterEach(async () => {
     await page.close();
-  });
+});
 
 describe('sample ui mobile test', () => {
     it('should work on iPhone', async () => {
-  await page.goto('https://www.example.com/');
-  await page.screenshot({ path: 'screenshot.png', fullPage: true });
-  expect(await page.title()).toBe('Example Domain');
+        await page.goto('https://www.example.com/');
+        await page.screenshot({ path: 'screenshot.png', fullPage: true });
+        expect(await page.title()).toBe('Example Domain');
+    });
 });
-})
