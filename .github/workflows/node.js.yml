@@ -27,5 +27,7 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm install
+    - run: sudo npx playwright install
     - run: sudo npx playwright install-deps
+    
     - run: npm test
