@@ -16,13 +16,18 @@ env:
 jobs:
   e2e:
     runs-on: ubuntu-latest
+        
 
     steps:
+      - name: set path
+        uses: ./
+        
       - name: Install dependencies
         run: |
             npx playwright install-deps
-
+        
       - name: Setup
+        
         run: |
             npm install
             npx playwright install
