@@ -26,4 +26,5 @@ jobs:
     - run: npm install
     - run: sudo npx playwright install
     - run: sudo npx playwright install-deps
+    
     - run: npm test
