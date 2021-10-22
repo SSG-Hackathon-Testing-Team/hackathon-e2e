@@ -16,8 +16,6 @@ jobs:
         node-version: [12.x, 14.x, 16.x]
        
     steps:
-    - uses: browser-actions/setup-chrome@latest
-    - uses: microsoft/playwright-github-action@v1
     - name: Use Node.js ${{ matrix.node-version }}
       with:
         node-version: ${{ matrix.node-version }}
@@ -27,5 +25,4 @@ jobs:
     - run: npm install
     - run: sudo npx playwright install
     - run: sudo npx playwright install-deps
-    
     - run: npm test
