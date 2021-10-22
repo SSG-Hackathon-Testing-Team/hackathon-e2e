@@ -24,16 +24,16 @@ jobs:
       - name: Install dependencies
         run: |
             npx playwright install-deps
-        working-directory: hackathon-e2e
+        working-directory: ../hackathon-e2e
         
       - name: Setup
         
         run: |
             npm install
             npx playwright install
-        working-directory: hackathon-e2e
+        working-directory: ../hackathon-e2e
             
       - name: test
         run: |
             npm test
-        working-directory: hackathon-e2e
+        working-directory: ../hackathon-e2e
