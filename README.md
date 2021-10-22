@@ -1,4 +1,4 @@
-# hackaton-e2e
+# hackathon-e2e
 
 ## Built With
 ## Getting Started
