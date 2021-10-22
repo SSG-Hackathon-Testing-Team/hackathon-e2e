@@ -20,7 +20,9 @@ jobs:
 
     steps:
       - name: set path
-        uses: ../ 
+        run: |
+          cd ../
+
         
       - name: Install dependencies
         run: |
