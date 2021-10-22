@@ -14,11 +14,11 @@ This is an example of how to list things you need to use the software and how to
 
 1. Clone the repo
    ```sh
-   git clone TBD
+   git clone https://github.com/SSG-Hackathon-Testing-Team/hackathon-e2e.git
    ```
 2. Install NPM packages
    ```sh
-   yarn install
+   npm install
    ```
 
 
@@ -26,5 +26,5 @@ This is an example of how to list things you need to use the software and how to
 
 Test execution
 ```sh
-   yarn test
+   npm test
    ```

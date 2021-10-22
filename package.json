@@ -6,7 +6,6 @@
   "scripts": {
     "test": "jest"
   },
-  "dependencies": {},
   "devDependencies": {
     "jest": "^27.3.1",
     "jest-playwright-preset": "^1.7.0",
