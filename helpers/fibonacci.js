@@ -8,11 +8,18 @@ function fibonacci(num) {
 
 module.exports = function fibonacciOddValues() {
   let array = [];
-  for (let i = 1; i <= 40; i++) {
-    let val = fibonacci(i);
+  let val = 0;
+  let i = 2;
+  while (true) {
+    val = fibonacci(i);
+    if (val > 40) {
+      break;
+    }
     if (val % 2 !== 0) {
       array.push(val);
     }
+
+    i++;
   }
   return array;
 };
