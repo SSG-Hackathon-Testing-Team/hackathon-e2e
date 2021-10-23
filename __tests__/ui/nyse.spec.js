@@ -9,8 +9,8 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-  //await browser.close();
-  //await page.close();
+  await browser.close();
+  await page.close();
 });
 
 describe('sample ui test', () => {
@@ -29,28 +29,51 @@ describe('sample ui test', () => {
     await page.click('.search-results-url>a');
     expect(await page.title()).toBe('NYSE');
 
-    await page.waitForSelector(
-      'body > div:nth-child(1) > div.sticky-header__main > div.landing-section > div.idc-container > div > div > div:nth-child(2) > div:nth-child(1) > div.d-widget.d-vbox.d-flex1.DataTable-nyse > div.d-w-titlebar-in-content > span > div:nth-child(2) > div:nth-child(1) > div > div > div > input[type=text]'
+    await page.waitForSelector('.d-button-normal > span');
+    const datePickers = await page.$$(
+      '.react-datepicker__input-container:first-of-type > input '
     );
-    await page.fill(
-      'body > div:nth-child(1) > div.sticky-header__main > div.landing-section > div.idc-container > div > div > div:nth-child(2) > div:nth-child(1) > div.d-widget.d-vbox.d-flex1.DataTable-nyse > div.d-w-titlebar-in-content > span > div:nth-child(2) > div:nth-child(1) > div > div > div > input[type=text]',
-      '2021-09-01'
-    );
-    await page.press(
-      'body > div:nth-child(1) > div.sticky-header__main > div.landing-section > div.idc-container > div > div > div:nth-child(2) > div:nth-child(1) > div.d-widget.d-vbox.d-flex1.DataTable-nyse > div.d-w-titlebar-in-content > span > div:nth-child(2) > div:nth-child(1) > div > div > div > input[type=text]',
-      'Enter'
-    );
-    await page.fill(
-      'body > div:nth-child(1) > div.sticky-header__main > div.landing-section > div.idc-container > div > div > div:nth-child(2) > div:nth-child(1) > div.d-widget.d-vbox.d-flex1.DataTable-nyse > div.d-w-titlebar-in-content > span > div:nth-child(2) > div:nth-child(3) > div > div > div > input[type=text]',
-      '2021-09-30'
-    );
-    await page.press(
-      'body > div:nth-child(1) > div.sticky-header__main > div.landing-section > div.idc-container > div > div > div:nth-child(2) > div:nth-child(1) > div.d-widget.d-vbox.d-flex1.DataTable-nyse > div.d-w-titlebar-in-content > span > div:nth-child(2) > div:nth-child(3) > div > div > div > input[type=text]',
-      'Enter'
+    await datePickers[0].fill('2021-09-01');
+    await page.press('body', 'Enter');
+    await datePickers[1].fill('2021-09-30');
+    await page.press('body', 'Enter');
+
+    await page.click('.d-button-normal > span');
+
+    await page.waitForSelector(`.Time`, {
+      state: 'visible',
+    });
+
+    const time = await page.$$('.Time');
+    const close = await page.$$('.Close');
+    time.shift();
+    close.shift();
+
+    let obj = {
+      period: {
+        startDate: '2021-09-01',
+        endDate: '2021-09-30',
+      },
+      stockData: [],
+      highestClosingPrice: 0,
+    };
+
+    for (let i = 0; i < time.length; i++) {
+      let timeText = await time[i].innerText();
+      timeText = new Date(timeText).toISOString().slice(0, 10);
+      const closeText = await close[i].innerText();
+      obj.stockData.push({ date: timeText, value: parseFloat(closeText) });
+    }
+
+    obj.highestClosingPrice = Math.max.apply(
+      Math,
+      obj.stockData.map(function (e) {
+        return e.value;
+      })
     );
 
-    await page.click(
-      'body > div:nth-child(1) > div.sticky-header__main > div.landing-section > div.idc-container > div > div > div:nth-child(2) > div:nth-child(1) > div.d-widget.d-vbox.d-flex1.DataTable-nyse > div.d-w-titlebar-in-content > span > div:nth-child(2) > button'
-    );
-  });
+    let json = JSON.parse(JSON.stringify(obj));
+
+    console.log(json);
+  }, 505505);
 });
