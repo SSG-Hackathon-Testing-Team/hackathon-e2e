@@ -1,5 +1,8 @@
 const { chromium } = require('playwright');
+const { getTitle } = require('../../helpers/get-title')
 const expect = require('expect');
+
+const fibonacci = require('../../helpers/fibonacci')
 let browser;
 let page;
 
@@ -26,8 +29,6 @@ describe('YouTube', () => {
     it('should capture videos', async () => {
         await page.goto('https://www.youtube.com/c/EPAMSystemsGlobal/videos');
         await page.click('text=I agree');
-        //await page.waitForNavigation()
-        // expect(await page.title()).toBe('Epam Systems Global - YouTube');
 
         await page.waitForSelector('input[id=search]')
         await page.click('input[id=search]')
@@ -36,7 +37,6 @@ describe('YouTube', () => {
 
         await page.click('div[id=content-section] yt-formatted-string.ytd-channel-name');
         await page.click('.tp-yt-paper-tab:has-text("Videos")')
-
 
         const hasOlderVides = async () => {
             const uplodaed = '.style-scope ytd-grid-renderer  div[id=dismissible] div[id=metadata-container] div[id=metadata-line] span:nth-child(2)'
@@ -70,21 +70,46 @@ describe('YouTube', () => {
                 metadatas.push({
                     title,
                     views, 
-                    uploadDate 
+                    uploadDate,
+                    locator: video
                 })
             }
-            
-           
         }
         console.log(metadatas)
         console.log(metadatas.length)
+        console.log(fibonacci())
+        const index = fibonacci()[Math.floor(Math.random() * 5)]
+        const selectedVideoIndex = metadatas[index];
+
+        console.log('index', index)
+        console.log('selected video', selectedVideoIndex )
+        await selectedVideoIndex.locator.click()
+
+        await page.waitForSelector('div[id=related]')
+        
+        await page.screenshot({ path: './reports/youtube1.png', fullPage: true });
+
+        await page.goBack()
 
 
 
+        const title = await getTitle()
+        console.log('TITLE', title)
 
+        const hasTitle = (t) => {
+            return t.title == title 
+        }
 
+        const filteredVideo = metadatas.filter(hasTitle)
+        console.log('filteredVideo', filteredVideo)
 
-        await page.waitForNavigation()
+        await filteredVideo[0].locator.click()
 
+        await page.waitForSelector('div[id=related]')
+        
+        await page.screenshot({ path: './reports/youtube2.png', fullPage: true });
+        
+        //add asssertions
+        expect(true).toBe(true)
     });
 });
