@@ -39,7 +39,7 @@ describe('YouTube', () => {
         await page.click('.tp-yt-paper-tab:has-text("Videos")')
 
         const hasOlderVides = async () => {
-            const uplodaed = '.style-scope ytd-grid-renderer  div[id=dismissible] div[id=metadata-container] div[id=metadata-line] span:nth-child(2)'
+            const uplodaed = '.style-scope ytd-grid-renderer div[id=dismissible] div[id=metadata-container] div[id=metadata-line] span:nth-child(2)'
             const locator = page.locator(uplodaed).last()
             const text = await locator.innerText()
             console.log('LAST TEXT', text)
@@ -65,7 +65,6 @@ describe('YouTube', () => {
             const views = await video.locator(metadataLocator).first().innerText()
             const uploadDate = await video.locator(metadataLocator).last().innerText()
 
-            
             if(!uploadDate.includes('2 years ago')){
                 metadatas.push({
                     title,
@@ -109,7 +108,7 @@ describe('YouTube', () => {
         
         await page.screenshot({ path: './reports/youtube2.png', fullPage: true });
         
-        //add asssertions
+        //TODO: add asssertions
         expect(true).toBe(true)
     });
 });
