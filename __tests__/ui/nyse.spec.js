@@ -1,5 +1,6 @@
 const { chromium } = require('playwright');
 const expect = require('expect');
+const superagent = require('superagent');
 let browser;
 let page;
 
@@ -9,8 +10,8 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-  await browser.close();
-  await page.close();
+  //await browser.close();
+  //await page.close();
 });
 
 describe('sample ui test', () => {
@@ -60,7 +61,8 @@ describe('sample ui test', () => {
 
     for (let i = 0; i < time.length; i++) {
       let timeText = await time[i].innerText();
-      timeText = new Date(timeText).toISOString().slice(0, 10);
+      timeText = timeText.replace(/\//g, '-');
+      timeText = timeText.replace(/(\d*)-(\d*)-(\d*)/g, '$3-$1-$2');
       const closeText = await close[i].innerText();
       obj.stockData.push({ date: timeText, value: parseFloat(closeText) });
     }
