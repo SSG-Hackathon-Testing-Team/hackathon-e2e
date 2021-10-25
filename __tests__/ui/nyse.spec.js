@@ -59,8 +59,7 @@ describe('sample ui test', () => {
     }
     for (let i = 0; i < time.length; i++) {
       let timeText = await time[i].innerText();
-      timeText = timeText.replace(/\//g,'-')
-      timeText = timeText.replace(/(\d*)-(\d*)-(\d*)/g,'$3-$1-$2')
+      timeText = timeText.replace(/(\d*)\/(\d*)\/(\d*)/g,'$3-$1-$2')
       const closeText = await close[i].innerText();
       obj.stockData.push({ 'date': timeText, 'value': parseFloat(closeText) });
     }
